@@ -109,11 +109,19 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
 
         Flux.merge(fxClientes, fxPlatos)
                 .subscribe(r -> LOGGER.info(r.toString()));
-
     }
+
+    public void metodo8filter(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        fxClientes.filter(p -> p.startsWith("F"))
+                .subscribe(r -> LOGGER.info(r));
+    }
+
+
 
     @Override
     public void run(String... args) throws Exception {
-        metodo7merge();
+        metodo8filter();
     }
 }
