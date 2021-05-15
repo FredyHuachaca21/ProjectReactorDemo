@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import reactor.core.publisher.Mono;
 
 
 @SpringBootApplication
@@ -17,9 +17,13 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
         SpringApplication.run(SpringReactorDemoApplication.class, args);
     }
 
+    public void crearMono(){
+      Mono<Integer> monoNumero = Mono.just(7);
+      monoNumero.subscribe(x -> LOGGER.info("Numero: "+ x));
+    }
 
     @Override
     public void run(String... args) throws Exception {
-
+        crearMono();
     }
 }
