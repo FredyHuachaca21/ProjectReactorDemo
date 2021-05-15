@@ -54,14 +54,24 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
         fxPlatos.map(p -> p.toUpperCase())
                 .subscribe(p -> LOGGER.info(p));
 
-        /*Se verifica que pasa antes de transformar el flujo*/
+        /*Se verifica que pasa antes de transformar el flujo -> Como una depuración*/
         fxPlatos.doOnNext(p -> LOGGER.info(p))
                 .map(p -> "Platos: " + p)
                 .subscribe(p -> LOGGER.info(p));
     }
 
+    public void metodo3flatMap(){
+        Flux<String> fxPlatos = Flux.fromIterable(platos);
+        /*flatMap se tiene que especificar el retorno explícito*/
+        Mono.just("Fredy")
+                .doOnNext(d -> LOGGER.info( "Viene como : " + d + " y lo transforma a ..."))
+                .flatMap(x -> Mono.just("Edgar"))
+                .subscribe(n -> LOGGER.info(n));
+    }
+    
+
     @Override
     public void run(String... args) throws Exception {
-        metodo2map();
+        metodo3flatMap();
     }
 }
