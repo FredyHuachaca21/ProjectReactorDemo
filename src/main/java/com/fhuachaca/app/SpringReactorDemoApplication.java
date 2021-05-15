@@ -134,10 +134,17 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
                 .subscribe(r->LOGGER.info(r));
     }
 
+    public void metodo11defaultIfEmpty(){
+       List<String> clientes = new ArrayList<>();
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        fxClientes.defaultIfEmpty("La lista no tiene elementos")
+                .subscribe(r -> LOGGER.info(r));
+    }
+
 
 
     @Override
     public void run(String... args) throws Exception {
-        metodo10take();
+        metodo11defaultIfEmpty();
     }
 }
