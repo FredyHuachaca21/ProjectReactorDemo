@@ -44,11 +44,24 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
     public void metodo1doOnNext(){
         Flux<String> fxPlatos = Flux.fromIterable(platos);
         /*NADA SUCEDE HASTA QUE TE SUSCRIBAS*/
+        /*doOnNext sirve para ver que pasa por cada flujo*/
         fxPlatos.doOnNext(p -> LOGGER.info(p)).subscribe();
+    }
+
+    public void metodo2map(){
+        Flux<String> fxPlatos = Flux.fromIterable(platos);
+        /*map sirve para transformar elementos*/
+        fxPlatos.map(p -> p.toUpperCase())
+                .subscribe(p -> LOGGER.info(p));
+
+        /*Se verifica que pasa antes de transformar el flujo*/
+        fxPlatos.doOnNext(p -> LOGGER.info(p))
+                .map(p -> "Platos: " + p)
+                .subscribe(p -> LOGGER.info(p));
     }
 
     @Override
     public void run(String... args) throws Exception {
-        metodo1doOnNext();
+        metodo2map();
     }
 }
