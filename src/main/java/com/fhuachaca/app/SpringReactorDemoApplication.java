@@ -126,10 +126,18 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
                 .subscribe(r->LOGGER.info(r));
     }
 
+    public void metodo10take(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        /*Filtra la cantidad de elementos que se envia en el parámetro desde el inicio*/
+        fxClientes.take(2)
+                .subscribe(r->LOGGER.info(r));
+    }
+
 
 
     @Override
     public void run(String... args) throws Exception {
-        metodo9takeLast();
+        metodo10take();
     }
 }
