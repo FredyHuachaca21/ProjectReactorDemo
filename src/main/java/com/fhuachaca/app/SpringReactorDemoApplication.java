@@ -141,10 +141,34 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
                 .subscribe(r -> LOGGER.info(r));
     }
 
+    public void metodo12onErrorReturn(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        fxClientes.doOnNext(c -> {throw new ArithmeticException("ACÁ SUCEDE ERROR PROVOCADO");})
+                /*En este punto se puede manejar el error para transformarlo*/
+                .onErrorMap(e ->  new Exception("Error transformado"))
+                /*Otra alternativa para controlar el error*/
+                //.onErrorReturn("ERROR CONTROLADO")
+                .subscribe(r -> LOGGER.info(r));
+    }
+
+    public void metodo13retry(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+
+        fxClientes.doOnNext(c -> {
+            LOGGER.info("intentado.....");
+            throw new ArithmeticException("Error provocado");
+        })
+                .retry(3)
+                .onErrorReturn("No fue posible intentar resolver el error!")
+                .subscribe(r -> LOGGER.info(r));
+    }
+
 
 
     @Override
     public void run(String... args) throws Exception {
-        metodo11defaultIfEmpty();
+        metodo13retry();
     }
 }
