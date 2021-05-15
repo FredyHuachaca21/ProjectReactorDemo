@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -89,8 +90,22 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
         Thread.sleep(10000);
     }
 
+    public void metodo6zipWith(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        Flux<String> fcPlatos = Flux.fromIterable(platos);
+
+        /*zipWhith sirve para concatenar flujos*/
+
+        fcPlatos
+                .zipWith(fxClientes, (p, c) -> String.format("Flux1: %s, Flux2: %s", p, c))
+                .subscribe(x -> LOGGER.info(x));
+
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        metodo5delayElements();
+        metodo6zipWith();
     }
 }
