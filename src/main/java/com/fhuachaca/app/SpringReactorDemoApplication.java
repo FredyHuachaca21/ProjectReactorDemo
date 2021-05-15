@@ -68,10 +68,20 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
                 .flatMap(x -> Mono.just("Edgar"))
                 .subscribe(n -> LOGGER.info(n));
     }
-    
+
+    public void metodo4range(){
+        /*range es un método estático solo acepta enteros => tiene 2 parámetros
+        * el primero es incluyente y el segundo es excluyente */
+        Flux<Integer> rangoNumeros = Flux.range(0, 10);
+        rangoNumeros
+                .doOnNext(n -> LOGGER.info(n.toString()))
+                .map(x -> x +1)
+                .subscribe(r -> LOGGER.info("Numero: " + r));
+
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        metodo3flatMap();
+        metodo4range();
     }
 }
