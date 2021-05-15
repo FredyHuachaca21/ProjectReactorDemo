@@ -33,7 +33,12 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
 
     public void crearFlux(){
         Flux<String> fxPlatos = Flux.fromIterable(platos);
-        fxPlatos.subscribe( p -> LOGGER.info(p));
+        /*Flujo de plastos en Flux*/
+//        fxPlatos.subscribe( p -> LOGGER.info(p));
+
+        /*Envuelve en un mono la lista de platos con collections*/
+        /*  Proceso inverso de Mono a Flux no es posible*/
+        fxPlatos.collectList().subscribe(lista -> LOGGER.info(lista.toString()));
     }
 
     @Override
