@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +81,16 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
 
     }
 
+    public void metodo5delayElements() throws InterruptedException {
+        Flux.range(10, 20)
+                .delayElements(Duration.ofSeconds(1))
+                .doOnNext(d -> LOGGER.info(d.toString()))
+                .subscribe();
+        Thread.sleep(10000);
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        metodo4range();
+        metodo5delayElements();
     }
 }
