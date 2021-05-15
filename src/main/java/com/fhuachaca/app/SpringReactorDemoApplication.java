@@ -41,8 +41,14 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
         fxPlatos.collectList().subscribe(lista -> LOGGER.info(lista.toString()));
     }
 
+    public void metodo1doOnNext(){
+        Flux<String> fxPlatos = Flux.fromIterable(platos);
+        /*NADA SUCEDE HASTA QUE TE SUSCRIBAS*/
+        fxPlatos.doOnNext(p -> LOGGER.info(p)).subscribe();
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        crearFlux();
+        metodo1doOnNext();
     }
 }
