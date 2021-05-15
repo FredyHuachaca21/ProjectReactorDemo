@@ -92,7 +92,6 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
 
     public void metodo6zipWith(){
         List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
-
         Flux<String> fxClientes = Flux.fromIterable(clientes);
         Flux<String> fcPlatos = Flux.fromIterable(platos);
 
@@ -103,9 +102,18 @@ public class SpringReactorDemoApplication implements CommandLineRunner {
                 .subscribe(x -> LOGGER.info(x));
 
     }
+    public void metodo7merge(){
+        List<String> clientes = Arrays.asList("Fred", "Edgar", "Isabel", "Frank");
+        Flux<String> fxClientes = Flux.fromIterable(clientes);
+        Flux<String> fxPlatos = Flux.fromIterable(platos);
+
+        Flux.merge(fxClientes, fxPlatos)
+                .subscribe(r -> LOGGER.info(r.toString()));
+
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        metodo6zipWith();
+        metodo7merge();
     }
 }
